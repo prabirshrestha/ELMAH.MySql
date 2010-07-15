@@ -82,7 +82,7 @@ CREATE PROCEDURE `Elmah_GetErrorsXml`
 BEGIN
 	SELECT COUNT(*) INTO `TotalCount` FROM `Elmah_Error` WHERE `Application`= Application;
 	
-	SET @index = PageIndex * PageSize + 1;
+	SET @index = PageIndex * (PageSize + 1);
 	SET @count = PageSize;
 	PREPARE STMT FROM 'SELECT * FROM `elmah_error` WHERE `Application`=Application ORDER BY `TimeUtc` DESC, `Sequence` DESC LIMIT ?,?';
 	EXECUTE STMT USING @index, @count;

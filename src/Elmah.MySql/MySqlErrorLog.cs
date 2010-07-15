@@ -1,7 +1,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace Elmah.MySql
+namespace Elmah
 {
     using System;
     using System.Collections;
@@ -168,6 +168,8 @@ namespace Elmah.MySql
                     cmd.Parameters.AddWithValue("@Application", ApplicationName);
                     cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
                     cmd.Parameters.AddWithValue("@PageSize", pageSize);
+                    cmd.Parameters.Add("TotalCount", MySqlDbType.Int32).Direction = ParameterDirection.Output; 
+
                     cn.Open();
 
                     using (IDataReader reader = cmd.ExecuteReader())
@@ -214,7 +216,7 @@ namespace Elmah.MySql
             // the configuration to get the actual connection string.
 
             string connectionStringName = config.Contains("connectionStringName")
-                                              ? config["connectionstringName"].ToString()
+                                              ? config["connectionStringName"].ToString()
                                               : string.Empty;
 
             if (!string.IsNullOrEmpty(connectionStringName))

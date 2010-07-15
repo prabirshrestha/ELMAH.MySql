@@ -8,7 +8,7 @@
     <ProjectGuid>{A43E6868-B598-4A42-BDD3-C8F4AB99B25A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Elmah.MySql</RootNamespace>
+    <RootNamespace>Elmah</RootNamespace>
     <AssemblyName>Elmah.MySql</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
