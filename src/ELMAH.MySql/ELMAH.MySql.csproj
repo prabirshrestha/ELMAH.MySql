@@ -41,10 +41,10 @@
       <HintPath>..\..\libs\MySql.Data\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MySqlErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
