@@ -110,7 +110,43 @@ namespace Elmah.MySql
         /// </summary>
         public override ErrorLogEntry GetError(string id)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException("id");
+
+            Guid errorGuid;
+            try
+            {
+                errorGuid = new Guid(id);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(e.Message, "id", e);
+            }
+
+            string errorXml = null;
+
+            using (MySqlConnection cn = new MySqlConnection(ConnectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand("Elmah_GetErrorXml", cn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Application", ApplicationName);
+                    cmd.Parameters.AddWithValue("@ErrorId", id);
+
+                    cn.Open();
+                    using (IDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                            errorXml = reader["AllXml"].ToString();
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(errorXml))
+                return null;
+
+            Error error = ErrorXml.DecodeString(errorXml);
+            return new ErrorLogEntry(this, id, error);
         }
 
         /// <summary>
@@ -126,15 +162,19 @@ namespace Elmah.MySql
 
             using (MySqlConnection cn = new MySqlConnection(ConnectionString))
             {
-                using (MySqlCommand cmd = new MySqlCommand("", cn))
+                using (MySqlCommand cmd = new MySqlCommand("Elmah_GetErrorsXml", cn))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Application", ApplicationName);
+                    cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
+                    cmd.Parameters.AddWithValue("@PageSize", pageSize);
                     cn.Open();
 
                     using (IDataReader reader = cmd.ExecuteReader())
                     {
-                        if(errorEntryList!=null)
+                        if (errorEntryList != null)
                         {
-                            while(reader.Read())
+                            while (reader.Read())
                             {
                                 Guid guid = new Guid(reader["ErrorId"].ToString());
 
@@ -153,7 +193,7 @@ namespace Elmah.MySql
                         }
                     }
 
-                    return (int) cmd.Parameters["TotalCount"].Value;
+                    return (int)cmd.Parameters["TotalCount"].Value;
                 }
             }
         }
