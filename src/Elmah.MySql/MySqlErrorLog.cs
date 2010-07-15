@@ -119,7 +119,43 @@ namespace Elmah.MySql
         /// </summary>
         public override int GetErrors(int pageIndex, int pageSize, IList errorEntryList)
         {
-            throw new NotImplementedException();
+            if (pageIndex < 0)
+                throw new ArgumentOutOfRangeException("pageIndex", pageIndex, null);
+            if (pageSize < 0)
+                throw new ArgumentOutOfRangeException("pagesize", pageSize, null);
+
+            using (MySqlConnection cn = new MySqlConnection(ConnectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand("", cn))
+                {
+                    cn.Open();
+
+                    using (IDataReader reader = cmd.ExecuteReader())
+                    {
+                        if(errorEntryList!=null)
+                        {
+                            while(reader.Read())
+                            {
+                                Guid guid = new Guid(reader["ErrorId"].ToString());
+
+                                Error error = new Error();
+                                error.ApplicationName = reader["Application"].ToString();
+                                error.HostName = reader["Host"].ToString();
+                                error.Type = reader["Type"].ToString();
+                                error.Source = reader["Source"].ToString();
+                                error.Message = reader["Message"].ToString();
+                                error.User = reader["User"].ToString();
+                                error.StatusCode = Convert.ToInt32(reader["StatusCode"]);
+                                error.Time = Convert.ToDateTime(reader["TimeUtc"].ToString()).ToLocalTime();
+
+                                errorEntryList.Add(new ErrorLogEntry(this, guid.ToString(), error));
+                            }
+                        }
+                    }
+
+                    return (int) cmd.Parameters["TotalCount"].Value;
+                }
+            }
         }
 
         #endregion
