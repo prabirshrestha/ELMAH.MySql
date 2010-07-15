@@ -113,6 +113,7 @@ BEGIN
 		`User`,		
 		`StatusCode`,	
 		`TimeUtc`,	
+		`Sequence`,
 		`AllXml`		
 	) VALUES
 	(
@@ -125,6 +126,7 @@ BEGIN
 		User,
 		StatusCode,
 		TimeUtc,
+		0,        -- since sequence is not null, we have to pass some dummy value, this will be updated by trigger on insert
 		AllXml
 	);
 END $$
