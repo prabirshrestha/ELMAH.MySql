@@ -6,7 +6,7 @@
 
 CREATE TABLE Elmah_Error
 (
-	`ErrorId`		NVARCHAR(32)		NOT NULL,
+	`ErrorId`		CHAR(36)			NOT NULL,
 	`Application`	NVARCHAR(60)		NOT NULL,
 	`Host`			NVARCHAR(50)		NOT NULL,
 	`Type`			NVARCHAR(100)		NOT NULL,
@@ -46,3 +46,30 @@ DELIMITER ;
 CREATE TRIGGER `trgElmah_Error_AutoIncrementSequence`
 BEFORE INSERT on `Elmah_Error`
 FOR EACH ROW SET NEW.`Sequence` = Emlah_Error_NewSequenceNumber();
+
+-- can't put UUID() as default value,
+-- mysql 5 requires default values to be constant
+-- but i how do i get the last inserted guid in mysql?
+-- so better send guid from the one who inserts it - the app itself (C#)
+--
+-- CREATE TRIGGER `trgElmah_Error_AutoGUID`
+-- BEFORE INSERT ON `Elmah_Error`
+-- FOR EACH ROW SET NEW.ErrorId = UUID();
+
+/* ------------------------------------------------------------------------ 
+        STORED PROCEDURES                                                      
+   ------------------------------------------------------------------------ */
+DELIMITER $$
+CREATE PROCEDURE Elmah_GetErrorXml
+(
+	IN `Application` NVARCHAR(60),
+	IN `ErrorId`	 CHAR(36)
+)
+BEGIN
+	SELECT `AllXml`
+	FROM `Elmah_Error`
+	WHERE 
+		`ErrorId` = ErrorId	AND `Application` = Application
+END $$
+
+DELIMITER ;

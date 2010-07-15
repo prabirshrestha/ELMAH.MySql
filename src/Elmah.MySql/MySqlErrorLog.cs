@@ -1,4 +1,6 @@
 
+using MySql.Data.MySqlClient;
+
 namespace Elmah.MySql
 {
     using System;
@@ -73,6 +75,20 @@ namespace Elmah.MySql
         /// </summary>
         public override string Log(Error error)
         {
+            if (error == null)
+                throw new ArgumentNullException("error");
+
+            string errorXml = ErrorXml.EncodeString(error);
+            Guid id = Guid.NewGuid();
+
+            using (MySqlConnection cn = new MySqlConnection(ConnectionString))
+            {
+                string sql = null;
+                using (MySqlCommand cmd = new MySqlCommand(sql, cn))
+                {
+                    
+                }
+            }
             throw new NotImplementedException();
         }
 
