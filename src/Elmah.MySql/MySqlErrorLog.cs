@@ -1,3 +1,4 @@
+using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace Elmah.MySql
@@ -84,13 +85,23 @@ namespace Elmah.MySql
             {
                 using (MySqlCommand cmd = new MySqlCommand("Elmah_LogError", cn))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ErrorId", id.ToString());
+                    cmd.Parameters.AddWithValue("@Application", ApplicationName);
+                    cmd.Parameters.AddWithValue("@Host", error.HostName);
+                    cmd.Parameters.AddWithValue("@Type", error.Type);
+                    cmd.Parameters.AddWithValue("@Source", error.Source);
+                    cmd.Parameters.AddWithValue("@Message", error.Message);
+                    cmd.Parameters.AddWithValue("@User", error.User);
+                    cmd.Parameters.AddWithValue("@StatusCode", error.StatusCode);
+                    cmd.Parameters.AddWithValue("@TimeUtc", error.Time.ToUniversalTime());
+                    cmd.Parameters.AddWithValue("@AllXml", errorXml);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     return id.ToString();
                 }
             }
-            throw new NotImplementedException();
         }
 
         /// <summary>
