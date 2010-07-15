@@ -72,4 +72,21 @@ BEGIN
 		`ErrorId` = ErrorId	AND `Application` = Application
 END $$
 
+CREATE PROCEDURE `Elmah_GetErrorsXml`
+(
+	IN  `Application` NVARCHAR(60)
+	IN  `PageIndex`	 INT,
+	IN  `PageSize`	 INT,
+	OUT `TotalCount` INT
+)
+BEGIN
+	SELECT COUNT(*) FROM `Elmah` INTO `TotalCount` WHERE `Application`=Application
+	
+	SET @index = PageIndex * PageSize + 1;
+	SET @count = PageSize;
+	PREPARE STMT FROM 'SELECT * FROM `elmah_error` WHERE `Application`=Application ORDER BY `TimeUtc` DESC, `Sequence` DESC LIMIT ?,?';
+	EXECUTE STMT USING @index, @count;
+
+END $$
+
 DELIMITER ;
