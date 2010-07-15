@@ -1,4 +1,3 @@
-
 using MySql.Data.MySqlClient;
 
 namespace Elmah.MySql
@@ -83,10 +82,12 @@ namespace Elmah.MySql
 
             using (MySqlConnection cn = new MySqlConnection(ConnectionString))
             {
-                string sql = null;
-                using (MySqlCommand cmd = new MySqlCommand(sql, cn))
+                using (MySqlCommand cmd = new MySqlCommand("Elmah_LogError", cn))
                 {
-                    
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    return id.ToString();
                 }
             }
             throw new NotImplementedException();
