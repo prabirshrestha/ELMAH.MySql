@@ -8,8 +8,8 @@
     <ProjectGuid>{9AC4743C-8D3D-4518-A90C-B155D6ADC39C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ELMAH.MySql</RootNamespace>
-    <AssemblyName>ELMAH.MySql</AssemblyName>
+    <RootNamespace>Elmah.MySql</RootNamespace>
+    <AssemblyName>Elmah.MySql</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\bin\DotNet35\Debug\ELMAH.MySql.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\bin\DotNet35\Debug\Elmah.MySql.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\bin\DotNet35\Release\ELMAH.MySql.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\bin\DotNet35\Release\Elmah.MySql.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Elmah">

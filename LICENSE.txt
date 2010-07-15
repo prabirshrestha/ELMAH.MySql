@@ -2,7 +2,7 @@ http://www.prabir.me
 http://github.com/prabirshrestha/ELMAH.MySql
 
 ===================================================================================
-ELMAH.MySql is intended to be used in both open-source and commercial environments.
+Elmah.MySql is intended to be used in both open-source and commercial environments.
 ===================================================================================
 MIT License
 

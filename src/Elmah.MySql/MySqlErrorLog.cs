@@ -1,5 +1,5 @@
 
-namespace ELMAH.MySql
+namespace Elmah.MySql
 {
     using System;
     using System.Collections;

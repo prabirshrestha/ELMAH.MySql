@@ -8,8 +8,8 @@
     <ProjectGuid>{A43E6868-B598-4A42-BDD3-C8F4AB99B25A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ELMAH.MySql</RootNamespace>
-    <AssemblyName>ELMAH.MySql</AssemblyName>
+    <RootNamespace>Elmah.MySql</RootNamespace>
+    <AssemblyName>Elmah.MySql</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\DotNet20\Debug\ELMAH.MySql.XML</DocumentationFile>
+    <DocumentationFile>..\..\bin\DotNet20\Debug\Elmah.MySql.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\DotNet20\Release\ELMAH.MySql.XML</DocumentationFile>
+    <DocumentationFile>..\..\bin\DotNet20\Release\Elmah.MySql.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Elmah">
