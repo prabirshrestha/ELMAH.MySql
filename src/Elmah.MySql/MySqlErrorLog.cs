@@ -7,7 +7,6 @@ namespace Elmah
     using System.Collections;
     using System.Configuration;
     using System.Diagnostics;
-    using Elmah;
 
     /// <summary>
     /// MySql provider for ELMAH
@@ -31,7 +30,7 @@ namespace Elmah
             string connectionString = GetConnectionString(config);
 
             if (string.IsNullOrEmpty(connectionString))
-                throw new Elmah.ApplicationException("Connection string is missing for the MySql error log.");
+                throw new ApplicationException("Connection string is missing for the MySql error log.");
 
             _connectionString = connectionString;
 
@@ -86,16 +85,16 @@ namespace Elmah
                 using (MySqlCommand cmd = new MySqlCommand("Elmah_LogError", cn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ErrorId", id.ToString());
-                    cmd.Parameters.AddWithValue("@Application", ApplicationName);
-                    cmd.Parameters.AddWithValue("@Host", error.HostName);
-                    cmd.Parameters.AddWithValue("@Type", error.Type);
-                    cmd.Parameters.AddWithValue("@Source", error.Source);
-                    cmd.Parameters.AddWithValue("@Message", error.Message);
-                    cmd.Parameters.AddWithValue("@User", error.User);
-                    cmd.Parameters.AddWithValue("@StatusCode", error.StatusCode);
-                    cmd.Parameters.AddWithValue("@TimeUtc", error.Time.ToUniversalTime());
-                    cmd.Parameters.AddWithValue("@AllXml", errorXml);
+                    cmd.Parameters.AddWithValue("@pErrorId", id.ToString());
+                    cmd.Parameters.AddWithValue("@pApplication", ApplicationName);
+                    cmd.Parameters.AddWithValue("@pHost", error.HostName);
+                    cmd.Parameters.AddWithValue("@pType", error.Type);
+                    cmd.Parameters.AddWithValue("@pSource", error.Source);
+                    cmd.Parameters.AddWithValue("@pMessage", error.Message);
+                    cmd.Parameters.AddWithValue("@pUser", error.User);
+                    cmd.Parameters.AddWithValue("@pStatusCode", error.StatusCode);
+                    cmd.Parameters.AddWithValue("@pTimeUtc", error.Time.ToUniversalTime());
+                    cmd.Parameters.AddWithValue("@pAllXml", errorXml);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -130,13 +129,13 @@ namespace Elmah
                 using (MySqlCommand cmd = new MySqlCommand("Elmah_GetErrorXml", cn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Application", ApplicationName);
-                    cmd.Parameters.AddWithValue("@ErrorId", id);
+                    cmd.Parameters.AddWithValue("@pApplication", ApplicationName);
+                    cmd.Parameters.AddWithValue("@pErrorId", id);
 
                     cn.Open();
                     using (IDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                             errorXml = reader["AllXml"].ToString();
                     }
                 }
@@ -165,10 +164,10 @@ namespace Elmah
                 using (MySqlCommand cmd = new MySqlCommand("Elmah_GetErrorsXml", cn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Application", ApplicationName);
-                    cmd.Parameters.AddWithValue("@PageIndex", pageIndex);
-                    cmd.Parameters.AddWithValue("@PageSize", pageSize);
-                    cmd.Parameters.Add("TotalCount", MySqlDbType.Int32).Direction = ParameterDirection.Output; 
+                    cmd.Parameters.AddWithValue("@pApplication", ApplicationName);
+                    cmd.Parameters.AddWithValue("@pPageIndex", pageIndex);
+                    cmd.Parameters.AddWithValue("@pPageSize", pageSize);
+                    cmd.Parameters.Add("pTotalCount", MySqlDbType.Int32).Direction = ParameterDirection.Output; 
 
                     cn.Open();
 
@@ -195,7 +194,7 @@ namespace Elmah
                         }
                     }
 
-                    return (int)cmd.Parameters["TotalCount"].Value;
+                    return (int)cmd.Parameters["pTotalCount"].Value;
                 }
             }
         }

@@ -60,47 +60,50 @@ FOR EACH ROW SET NEW.`Sequence` = Emlah_Error_NewSequenceNumber();
         STORED PROCEDURES                                                      
    ------------------------------------------------------------------------ */
 DELIMITER $$
+-- DROP PROCEDURE IF EXISTS `Elmah_GetErrorXml` $$
 CREATE PROCEDURE Elmah_GetErrorXml
 (
-	IN `Application` NVARCHAR(60),
-	IN `ErrorId`	 CHAR(36)
+	IN `pApplication` NVARCHAR(60),
+	IN `pErrorId`	 CHAR(36)
 )
 BEGIN
 	SELECT `AllXml`
 	FROM `Elmah_Error`
 	WHERE 
-		`ErrorId` = ErrorId	AND `Application` = Application;
+		`ErrorId` = pErrorId AND `Application` = pApplication;
 END $$
 
+-- DROP PROCEDURE IF EXISTS `Elmah_GetErrorsXml` $$
 CREATE PROCEDURE `Elmah_GetErrorsXml`
 (
-	IN  `Application` NVARCHAR(60),
-	IN  `PageIndex`	 INT,
-	IN  `PageSize`	 INT,
-	OUT `TotalCount` INT
+	IN  `pApplication` NVARCHAR(60),
+	IN  `pPageIndex`	 INT,
+	IN  `pPageSize`	 INT,
+	OUT `pTotalCount` INT
 )
 BEGIN
-	SELECT COUNT(*) INTO `TotalCount` FROM `Elmah_Error` WHERE `Application`= Application;
+	SELECT COUNT(*) INTO `pTotalCount` FROM `Elmah_Error` WHERE `Application`= Application;
 	
-	SET @index = PageIndex * (PageSize + 1);
-	SET @count = PageSize;
+	SET @index = pPageIndex * (pPageSize + 1);
+	SET @count = pPageSize;
 	PREPARE STMT FROM 'SELECT * FROM `elmah_error` WHERE `Application`=Application ORDER BY `TimeUtc` DESC, `Sequence` DESC LIMIT ?,?';
 	EXECUTE STMT USING @index, @count;
 
 END $$
 
+-- DROP PROCEDURE IF EXISTS `Elmah_LogError` $$
 CREATE PROCEDURE `Elmah_LogError`
 (
-	IN `ErrorId`		CHAR(36),
-	IN `Application`	NVARCHAR(60),
-	IN `Host`			NVARCHAR(50),
-	IN `Type`			NVARCHAR(100),
-	IN `Source`			NVARCHAR(60),
-	IN `Message`		NVARCHAR(500),
-	IN `User`			NVARCHAR(50),
-	IN `StatusCode`		INT,
-	IN `TimeUtc`		DATETIME,
-	IN `AllXml`			TEXT
+	IN `pErrorId`		CHAR(36),
+	IN `pApplication`	NVARCHAR(60),
+	IN `pHost`			NVARCHAR(50),
+	IN `pType`			NVARCHAR(100),
+	IN `pSource`		NVARCHAR(60),
+	IN `pMessage`		NVARCHAR(500),
+	IN `pUser`			NVARCHAR(50),
+	IN `pStatusCode`	INT,
+	IN `pTimeUtc`		DATETIME,
+	IN `pAllXml`		TEXT
 )
 BEGIN
 	INSERT INTO `Elmah_Error` (
@@ -117,17 +120,17 @@ BEGIN
 		`AllXml`		
 	) VALUES
 	(
-		ErrorId,
-		Application,
-		Host,
-		Type,
-		Source,
-		Message,
-		User,
-		StatusCode,
-		TimeUtc,
-		0,        -- since sequence is not null, we have to pass some dummy value, this will be updated by trigger on insert
-		AllXml
+		pErrorId,
+		pApplication,
+		pHost,
+		pType,
+		pSource,
+		pMessage,
+		pUser,
+		pStatusCode,
+		pTimeUtc,
+		p0,        -- since sequence is not null, we have to pass some dummy value, this will be updated by trigger on insert
+		pAllXml
 	);
 END $$
 
