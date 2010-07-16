@@ -1,6 +1,7 @@
 http://www.prabir.me
 http://github.com/prabirshrestha/ELMAH.MySql
 
+The below license doesn't apply for MySql.Data.dll
 ===================================================================================
 Elmah.MySql is intended to be used in both open-source and commercial environments.
 ===================================================================================
