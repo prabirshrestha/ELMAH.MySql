@@ -7,7 +7,7 @@ Getting Started
 
 ### MySQL script
 
-You will first of all need to execute the MySql script which can be found at http://github.com/prabirshrestha/ELMAH.MySql/blob/master/src/Elmah.MySql/MySql.sql
+You will first of all need to execute the MySql script which can be found [here](http://github.com/prabirshrestha/ELMAH.MySql/blob/master/src/Elmah.MySql/MySql.sql)
 Incase you download from the downloads tab, execute the mysql.sql script that comes with the binary distribution.
 
 ### Web.Config
@@ -18,7 +18,7 @@ You will then need to add the errorLog type
 
 ## Download the latest binaries
 
-You can download the latest binaries at http://github.com/prabirshrestha/ELMAH.MySql/downloads
+You can download the latest binaries at [http://github.com/prabirshrestha/ELMAH.MySql/downloads](http://github.com/prabirshrestha/ELMAH.MySql/downloads)
 
 ## License
 
@@ -26,9 +26,9 @@ Elmah.MySql is intended to be used in both open-source and commercial environmen
 
 #### Notes
 
-If you are new to ELMAH refer to http://dotnetslackers.com/articles/aspnet/ErrorLoggingModulesAndHandlers.aspx on getting started with ELMAH. 
+If you are new to ELMAH refer to this [tutorial](http://dotnetslackers.com/articles/aspnet/ErrorLoggingModulesAndHandlers.aspx) on getting started with ELMAH. 
 
 
-Prabir Shrestha
-http://www.prabir.me
-http://www.twitter.com/prabirshrestha
+[Prabir Shrestha](http://www.prabir.me)
+
+Follow me on twitter [@prabirshrestha](http://www.twitter.com/prabirshrestha)
