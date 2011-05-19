@@ -36,8 +36,7 @@
     <Reference Include="Elmah">
       <HintPath>..\..\..\libs\elmah-1.1\net-3.5\Release\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MySql.Data, Version=5.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\..\..\libs\MySql.Data\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
